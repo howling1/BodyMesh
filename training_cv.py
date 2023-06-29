@@ -109,6 +109,7 @@ def train_cv(model_params, female_dataset, male_dataset, device, config):
 
         wandb.log({"table": pd.DataFrame(test_result)})
         run_n += 1
+        break
 
 def train(model, trainloader, valloader, config, device, run_n):
     if config["task"]== "regression" :
@@ -121,7 +122,7 @@ def train(model, trainloader, valloader, config, device, run_n):
     optimizer = torch.optim.Adam(model.parameters(), lr=config['base_lr'], weight_decay=config['weight_decay'])
     scheduler = None
     if config['decayed_lr']:
-            scheduler = CosineAnnealingLR(optimizer, config['epochs'])
+        scheduler = CosineAnnealingLR(optimizer, config['epochs'])
 
     model.train()
 
@@ -228,14 +229,14 @@ def train(model, trainloader, valloader, config, device, run_n):
                 model.train()
 
 def main():    
-    REGISTERED_ROOT = "/vol/space/projects/ukbb/projects/silhouette/registered_10k_faces" # the path of the dir saving the .ply registered data
-    INMEMORY_ROOT = '/vol/space/projects/ukbb/projects/silhouette/imdataset/registered_10k_faces_imdataset' # the root dir path to save all the artifacts ralated of the InMemoryDataset
+    REGISTERED_ROOT = "/vol/space/projects/ukbb/projects/silhouette/registered_100_faces" # the path of the dir saving the .ply registered data
+    INMEMORY_ROOT = '/vol/space/projects/ukbb/projects/silhouette/imdataset/registered_100_faces_imdataset' # the root dir path to save all the artifacts ralated of the InMemoryDataset
     FEATURES_PATH = "/vol/space/projects/ukbb/projects/silhouette/ukb668815_imaging.csv"   
     IDS_PATH = "/vol/space/projects/ukbb/projects/silhouette/eids_filtered.npy"
     TARGET = "all"
 
     config = {
-        "experiment_name" : "cv_all_sage_10k_faces", # there should be a folder named exactly this under the folder runs/
+        "experiment_name" : "tamara_test_100", # there should be a folder named exactly this under the folder runs/
         "batch_size" : 32,
         "epochs" : 150,
         "base_lr" : 0.001,
